@@ -1,0 +1,7 @@
+altgraph==0.17.5
+packaging==26.1
+pillow==12.2.0
+pyinstaller==6.19.0
+pyinstaller-hooks-contrib==2026.4
+qrcode==8.2
+setuptools==82.0.1
