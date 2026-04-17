@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+dist/
+build/
+*.spec
+*.egg-info/
+.nextbit/
+.cache/
+.vscode/
+.venv/
+.DS_Store
+.env
