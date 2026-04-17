@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python: ["3.11"] # Reduced to one version to speed up builds and avoid duplicate file names in release
+        python: ["3.11"]
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -62,8 +62,18 @@ jobs:
           name: binaries-${{ matrix.os }}
           path: dist
 
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-artifacts
+          merge-multiple: true
+
       - name: Create GitHub Release (Latest)
-        if: github.ref == 'refs/heads/main'
         uses: ncipollo/release-action@v1
         with:
           tag: "latest"
@@ -73,5 +83,5 @@ jobs:
           replacesArtifacts: true
           makeLatest: true
           body: "Automated build from the latest commit. Download the file matching your OS below."
-          files: dist/*
+          files: all-artifacts/*
           token: ${{ secrets.GITHUB_TOKEN }}
